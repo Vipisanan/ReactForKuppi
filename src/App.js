@@ -19,12 +19,6 @@ function App() {
                 </Switch>
             </div>
         </Router>
-
-        //
-        // <div>
-        //     <NavBar></NavBar>
-        //     <Home></Home>
-        // </div>
     );
 }
 

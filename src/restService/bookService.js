@@ -1,6 +1,6 @@
 import axios from "axios/index";
 
-export function getDataService(page,size) {
+export function getDataService() {
     return new Promise(((resolve, reject) => {
         axios({
             method: 'GET',
@@ -8,9 +8,25 @@ export function getDataService(page,size) {
             timeout: 60000
         }).then((res) => {
             resolve(res);
-            console.log("success" ,res);
+            console.log("success", res);
         }).catch((error) => {
             reject(error);
         });
     }));
+}
+
+export function getBooksService() {
+    return new Promise(((resolve, reject) => {
+        axios({
+            method: 'GET',
+            url: `http://localhost:8080/api/book`,
+            timeout: 60000
+        }).then((res) => {
+            resolve(res);
+            console.log("success", res);
+        }).catch((error) => {
+            reject(error);
+        });
+    }))
+
 }

@@ -30,3 +30,19 @@ export function getBooksService() {
     }))
 
 }
+export function addBooksService(book) {
+    return new Promise(((resolve, reject) => {
+        axios({
+            method: 'POST',
+            url: `http://localhost:8080/api/book`,
+            data:book,
+            timeout: 60000
+        }).then((res) => {
+            resolve(res);
+            console.log("success", res);
+        }).catch((error) => {
+            reject(error);
+        });
+    }))
+
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {getDataService, getBooksService} from '../restService/bookService'
+import {getDataService, getBooksService , addBooksService} from '../restService/bookService'
 
 class Home extends React.Component {
 
@@ -41,6 +41,7 @@ class Home extends React.Component {
     }
 
 
+
     handleInputChange(event) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -53,12 +54,20 @@ class Home extends React.Component {
     }
 
     handleSubmit(event) {
-
-        alert('A form was submitted: ' + this.state.name + ' // ' + this.state.email);
         event.preventDefault();
         const book = event.target;
         const data = new FormData(book);
         console.log(JSON.parse(stringifyFormData(data)));
+        addBooksService(JSON.parse(stringifyFormData(data)))
+            .then((res) => {
+                if (res.status === 200) {
+                        alert("book added");
+                }
+            })
+            .catch((error) => {
+                alert("try again");
+                console.log("in App.js file error" + error);
+            });
     }
 
     render() {
@@ -73,10 +82,10 @@ class Home extends React.Component {
                             {
                                 this.state.books.map((book, index) => {
                                    return(
-                                       <div>
+                                       <div key={index}>
                                            <div className="card">
                                                <div className="card-header">
-                                                   Book {book.id}
+                                                   {book.id}
                                                </div>
                                                <div className="card-body">
                                                    <h5 className="card-title">book name :{book.name}</h5>
@@ -167,7 +176,7 @@ function stringifyFormData(fd) {
     for (let key of fd.keys()) {
         data[key] = fd.get(key);
     }
-    console.log("colling in stringifyFormData function after a for loop ", JSON.stringify(data, null, 2));
+    console.log("calling in stringifyFormData function  ", JSON.stringify(data, null, 2));
     return JSON.stringify(data, null, 2);
 }
 
